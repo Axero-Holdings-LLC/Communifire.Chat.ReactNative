@@ -7,7 +7,7 @@ import { dequal } from 'dequal';
 import I18n from '../../../i18n';
 import RoomItem, { ROW_HEIGHT } from '../../../presentation/RoomItem';
 import { MAX_SIDEBAR_WIDTH } from '../../../constants/tablet';
-import { isTablet, isIOS } from '../../../utils/deviceInfo';
+import { isIOS, isTablet } from '../../../utils/deviceInfo';
 import { getUserSelector } from '../../../selectors/login';
 import { withTheme } from '../../../theme';
 import { withDimensions } from '../../../dimensions';
@@ -17,7 +17,7 @@ import StatusBar from '../../../containers/StatusBar';
 import { goRoom } from '../../../utils/goRoom';
 import * as HeaderButton from '../../../containers/HeaderButton';
 import RocketChat from '../../../lib/rocketchat';
-import { logEvent, events } from '../../../utils/log';
+import { events, logEvent } from '../../../utils/log';
 import { getInquiryQueueSelector } from '../selectors/inquiry';
 
 const INITIAL_NUM_TO_RENDER = isTablet ? 20 : 12;
@@ -37,7 +37,7 @@ class QueueListView extends React.Component {
 			options.headerLeft = () => <HeaderButton.CloseModal navigation={navigation} testID='directory-view-close' />;
 		}
 		return options;
-	}
+	};
 
 	static propTypes = {
 		user: PropTypes.shape({
@@ -51,8 +51,10 @@ class QueueListView extends React.Component {
 		server: PropTypes.string,
 		useRealName: PropTypes.bool,
 		navigation: PropTypes.object,
-		theme: PropTypes.string
-	}
+		theme: PropTypes.string,
+		showAvatar: PropTypes.bool,
+		displayMode: PropTypes.string
+	};
 
 	shouldComponentUpdate(nextProps) {
 		const { queued } = this.props;
@@ -82,24 +84,22 @@ class QueueListView extends React.Component {
 		});
 	};
 
-	getRoomTitle = item => RocketChat.getRoomTitle(item)
+	getRoomTitle = item => RocketChat.getRoomTitle(item);
 
-	getRoomAvatar = item => RocketChat.getRoomAvatar(item)
+	getRoomAvatar = item => RocketChat.getRoomAvatar(item);
 
-	getUidDirectMessage = room => RocketChat.getUidDirectMessage(room)
+	getUidDirectMessage = room => RocketChat.getUidDirectMessage(room);
 
 	renderItem = ({ item }) => {
 		const {
-			user: {
-				id: userId,
-				username,
-				token
-			},
+			user: { id: userId, username, token },
 			server,
 			useRealName,
 			theme,
 			isMasterDetail,
-			width
+			width,
+			showAvatar,
+			displayMode
 		} = this.props;
 		const id = this.getUidDirectMessage(item);
 
@@ -114,16 +114,18 @@ class QueueListView extends React.Component {
 				token={token}
 				baseUrl={server}
 				onPress={this.onPressItem}
-				testID={`queue-list-view-item-${ item.name }`}
+				testID={`queue-list-view-item-${item.name}`}
 				width={isMasterDetail ? MAX_SIDEBAR_WIDTH : width}
 				useRealName={useRealName}
 				getRoomTitle={this.getRoomTitle}
 				getRoomAvatar={this.getRoomAvatar}
 				visitor={item.v}
 				swipeEnabled={false}
+				showAvatar={showAvatar}
+				displayMode={displayMode}
 			/>
 		);
-	}
+	};
 
 	render() {
 		const { queued, theme } = this.props;
@@ -155,6 +157,8 @@ const mapStateToProps = state => ({
 	isMasterDetail: state.app.isMasterDetail,
 	server: state.server.server,
 	useRealName: state.settings.UI_Use_Real_Name,
-	queued: getInquiryQueueSelector(state)
+	queued: getInquiryQueueSelector(state),
+	showAvatar: state.sortPreferences.showAvatar,
+	displayMode: state.sortPreferences.displayMode
 });
 export default connect(mapStateToProps)(withDimensions(withTheme(QueueListView)));

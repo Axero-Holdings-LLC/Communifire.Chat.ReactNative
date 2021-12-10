@@ -1,26 +1,26 @@
-import {
-	takeLatest, take, select, put, all, delay
-} from 'redux-saga/effects';
+import { all, delay, put, select, take, takeLatest } from 'redux-saga/effects';
 
 import UserPreferences from '../lib/userPreferences';
 import Navigation from '../lib/Navigation';
 import * as types from '../actions/actionsTypes';
 import { selectServerRequest, serverInitAdd } from '../actions/server';
-import { inviteLinksSetToken, inviteLinksRequest } from '../actions/inviteLinks';
+import { inviteLinksRequest, inviteLinksSetToken } from '../actions/inviteLinks';
 import database from '../lib/database';
 import RocketChat from '../lib/rocketchat';
 import EventEmitter from '../utils/events';
 import { showErrorAlert } from '../utils/info';
 import I18n from '../i18n';
-import {
-	appStart, ROOT_INSIDE, ROOT_NEW_SERVER, appInit
-} from '../actions/app';
+import { ROOT_INSIDE, ROOT_OUTSIDE, appInit, appStart } from '../actions/app';
 import { localAuthenticate } from '../utils/localAuthentication';
 import { goRoom } from '../utils/goRoom';
 import { loginRequest } from '../actions/login';
+import log from '../utils/log';
 
 const roomTypes = {
-	channel: 'c', direct: 'd', group: 'p', channels: 'l'
+	channel: 'c',
+	direct: 'd',
+	group: 'p',
+	channels: 'l'
 };
 
 const handleInviteLink = function* handleInviteLink({ params, requireLogin = false }) {
@@ -47,8 +47,10 @@ const navigate = function* navigate({ params }) {
 	if (params.path || params.rid) {
 		let type;
 		let name;
+		let jumpToThreadId;
 		if (params.path) {
-			[type, name] = params.path.split('/');
+			// Following this pattern: {channelType}/{channelName}/thread/{threadId}
+			[type, name, , jumpToThreadId] = params.path.split('/');
 		}
 		if (type !== 'invite' || params.rid) {
 			const room = yield RocketChat.canOpenRoom(params);
@@ -62,18 +64,24 @@ const navigate = function* navigate({ params }) {
 
 				const isMasterDetail = yield select(state => state.app.isMasterDetail);
 				const focusedRooms = yield select(state => state.room.rooms);
+				const jumpToMessageId = params.messageId;
 
 				if (focusedRooms.includes(room.rid)) {
 					// if there's one room on the list or last room is the one
 					if (focusedRooms.length === 1 || focusedRooms[0] === room.rid) {
-						yield goRoom({ item, isMasterDetail });
+						if (jumpToThreadId) {
+							// With this conditional when there is a jumpToThreadId we can avoid the thread open again
+							// above other thread and the room could call again the thread
+							popToRoot({ isMasterDetail });
+						}
+						yield goRoom({ item, isMasterDetail, jumpToMessageId, jumpToThreadId });
 					} else {
 						popToRoot({ isMasterDetail });
-						yield goRoom({ item, isMasterDetail });
+						yield goRoom({ item, isMasterDetail, jumpToMessageId, jumpToThreadId });
 					}
 				} else {
 					popToRoot({ isMasterDetail });
-					yield goRoom({ item, isMasterDetail });
+					yield goRoom({ item, isMasterDetail, jumpToMessageId, jumpToThreadId });
 				}
 
 				if (params.isCall) {
@@ -102,6 +110,15 @@ const fallbackNavigation = function* fallbackNavigation() {
 	yield put(appInit());
 };
 
+const handleOAuth = function* handleOAuth({ params }) {
+	const { credentialToken, credentialSecret } = params;
+	try {
+		yield RocketChat.loginOAuthOrSso({ oauth: { credentialToken, credentialSecret } }, false);
+	} catch (e) {
+		log(e);
+	}
+};
+
 const handleOpen = function* handleOpen({ params }) {
 	const serversDB = database.servers;
 	const serversCollection = serversDB.get('servers');
@@ -115,6 +132,16 @@ const handleOpen = function* handleOpen({ params }) {
 				host = id;
 			}
 		});
+
+		if (!host && params.fullURL) {
+			RocketChat.callJitsiWithoutServer(params.fullURL);
+			return;
+		}
+	}
+
+	if (params.type === 'oauth') {
+		yield handleOAuth({ params });
+		return;
 	}
 
 	// If there's no host on the deep link params and the app is opened, just call appInit()
@@ -126,9 +153,9 @@ const handleOpen = function* handleOpen({ params }) {
 	// If there's host, continue
 	if (!/^(http|https)/.test(host)) {
 		if (/^localhost(:\d+)?/.test(host)) {
-			host = `http://${ host }`;
+			host = `http://${host}`;
 		} else {
-			host = `https://${ host }`;
+			host = `https://${host}`;
 		}
 	} else {
 		// Notification should always come from https
@@ -141,7 +168,7 @@ const handleOpen = function* handleOpen({ params }) {
 
 	const [server, user] = yield all([
 		UserPreferences.getStringAsync(RocketChat.CURRENT_SERVER),
-		UserPreferences.getStringAsync(`${ RocketChat.TOKEN_KEY }-${ host }`)
+		UserPreferences.getStringAsync(`${RocketChat.TOKEN_KEY}-${host}`)
 	]);
 
 	// TODO: needs better test
@@ -175,7 +202,7 @@ const handleOpen = function* handleOpen({ params }) {
 			yield fallbackNavigation();
 			return;
 		}
-		yield put(appStart({ root: ROOT_NEW_SERVER }));
+		yield put(appStart({ root: ROOT_OUTSIDE }));
 		yield put(serverInitAdd(server));
 		yield delay(1000);
 		EventEmitter.emit('NewServer', { server: host });

@@ -1,9 +1,4 @@
 export default {
-	// ONBOARDING VIEW
-	ONBOARD_JOIN_A_WORKSPACE: 'onboard_join_a_workspace',
-	ONBOARD_CREATE_NEW_WORKSPACE: 'onboard_create_new_workspace',
-	ONBOARD_CREATE_NEW_WORKSPACE_F: 'onboard_create_new_workspace_f',
-
 	// NEW SERVER VIEW
 	NS_CONNECT_TO_WORKSPACE: 'ns_connect_to_workspace',
 	NS_JOIN_OPEN_WORKSPACE: 'ns_join_open_workspace',
@@ -15,6 +10,9 @@ export default {
 	// FORGOT PASSWORD VIEW
 	FP_FORGOT_PASSWORD: 'fp_forgot_password',
 	FP_FORGOT_PASSWORD_F: 'fp_forgot_password_f',
+
+	// SEND EMAIL CONFIRMATION VIEW
+	SEC_SEND_EMAIL_CONFIRMATION: 'sec_send_email_confirmation',
 
 	// REGISTER VIEW
 	REGISTER_DEFAULT_SIGN_UP: 'register_default_sign_up',
@@ -71,13 +69,17 @@ export default {
 	RL_TOGGLE_READ_F: 'rl_toggle_read_f',
 	RL_HIDE_CHANNEL: 'rl_hide_channel',
 	RL_HIDE_CHANNEL_F: 'rl_hide_channel_f',
-	RL_TOGGLE_SORT_DROPDOWN: 'rl_toggle_sort_dropdown',
-	RL_SORT_CHANNELS_BY_NAME: 'rl_sort_channels_by_name',
-	RL_SORT_CHANNELS_BY_ACTIVITY: 'rl_sort_channels_by_activity',
-	RL_SORT_CHANNELS_F: 'rl_sort_channels_f',
-	RL_GROUP_CHANNELS_BY_TYPE: 'rl_group_channels_by_type',
-	RL_GROUP_CHANNELS_BY_FAVORITE: 'rl_group_channels_by_favorite',
-	RL_GROUP_CHANNELS_BY_UNREAD: 'rl_group_channels_by_unread',
+	RL_CREATE_NEW_WORKSPACE: 'rl_create_new_workspace',
+
+	// DISPLAY PREFERENCES VIEW
+	DP_SORT_CHANNELS_BY_NAME: 'dp_sort_channels_by_name',
+	DP_SORT_CHANNELS_BY_ACTIVITY: 'dp_sort_channels_by_activity',
+	DP_GROUP_CHANNELS_BY_TYPE: 'dp_group_channels_by_type',
+	DP_GROUP_CHANNELS_BY_FAVORITE: 'dp_group_channels_by_favorite',
+	DP_GROUP_CHANNELS_BY_UNREAD: 'dp_group_channels_by_unread',
+	DP_TOGGLE_AVATAR: 'dp_toggle_avatar',
+	DP_DISPLAY_EXPANDED: 'dp_display_expanded',
+	DP_DISPLAY_CONDENSED: 'dp_display_condensed',
 
 	// QUEUE LIST VIEW
 	QL_GO_ROOM: 'ql_go_room',
@@ -85,9 +87,11 @@ export default {
 	// DIRECTORY VIEW
 	DIRECTORY_SEARCH_USERS: 'directory_search_users',
 	DIRECTORY_SEARCH_CHANNELS: 'directory_search_channels',
+	DIRECTORY_SEARCH_TEAMS: 'directory_search_teams',
 
 	// NEW MESSAGE VIEW
 	NEW_MSG_CREATE_CHANNEL: 'new_msg_create_channel',
+	NEW_MSG_CREATE_TEAM: 'new_msg_create_team',
 	NEW_MSG_CREATE_GROUP_CHAT: 'new_msg_create_group_chat',
 	NEW_MSG_CREATE_DISCUSSION: 'new_msg_create_discussion',
 	NEW_MSG_CHAT_WITH_USER: 'new_msg_chat_with_user',
@@ -98,14 +102,22 @@ export default {
 	SELECTED_USERS_CREATE_GROUP: 'selected_users_create_group',
 	SELECTED_USERS_CREATE_GROUP_F: 'selected_users_create_group_f',
 
+	// ADD EXISTING CHANNEL VIEW
+	AEC_ADD_CHANNEL: 'aec_add_channel',
+	AEC_REMOVE_CHANNEL: 'aec_remove_channel',
+
 	// CREATE CHANNEL VIEW
 	CR_CREATE: 'cr_create',
+	CT_CREATE: 'ct_create',
 	CR_CREATE_F: 'cr_create_f',
+	CT_CREATE_F: 'ct_create_f',
 	CR_TOGGLE_TYPE: 'cr_toggle_type',
 	CR_TOGGLE_READ_ONLY: 'cr_toggle_read_only',
 	CR_TOGGLE_BROADCAST: 'cr_toggle_broadcast',
 	CR_TOGGLE_ENCRYPTED: 'cr_toggle_encrypted',
 	CR_REMOVE_USER: 'cr_remove_user',
+	CT_ADD_ROOM_TO_TEAM: 'ct_add_room_to_team',
+	CT_ADD_ROOM_TO_TEAM_F: 'ct_add_room_to_team_f',
 
 	// CREATE DISCUSSION VIEW
 	CD_CREATE: 'cd_create',
@@ -142,6 +154,9 @@ export default {
 	SE_COPY_SERVER_VERSION: 'se_copy_server_version',
 	SE_CLEAR_LOCAL_SERVER_CACHE: 'se_clear_local_server_cache',
 	SE_LOG_OUT: 'se_log_out',
+
+	// USER PREFERENCE VIEW
+	UP_GO_USER_NOTIFICATION_PREF: 'up_go_user_notification_pref',
 
 	// SECURITY PRIVACY VIEW
 	SP_GO_E2EENCRYPTIONSECURITY: 'sp_go_e2e_encryption_security',
@@ -246,6 +261,15 @@ export default {
 	RA_TOGGLE_BLOCK_USER_F: 'ra_toggle_block_user_f',
 	RA_TOGGLE_ENCRYPTED: 'ra_toggle_encrypted',
 	RA_TOGGLE_ENCRYPTED_F: 'ra_toggle_encrypted_f',
+	RA_LEAVE_TEAM: 'ra_leave_team',
+	RA_LEAVE_TEAM_F: 'ra_leave_team_f',
+	RA_CONVERT_TO_TEAM: 'ra_convert_to_team',
+	RA_CONVERT_TO_TEAM_F: 'ra_convert_to_team_f',
+	RA_CONVERT_TEAM_TO_CHANNEL: 'ra_convert_team_to_channel',
+	RA_CONVERT_TEAM_TO_CHANNEL_F: 'ra_convert_team_to_channel_f',
+	RA_MOVE_TO_TEAM: 'ra_move_to_team',
+	RA_MOVE_TO_TEAM_F: 'ra_move_to_team_f',
+	RA_SEARCH_TEAM: 'ra_search_team',
 
 	// ROOM INFO VIEW
 	RI_GO_RI_EDIT: 'ri_go_ri_edit',
@@ -265,6 +289,8 @@ export default {
 	RI_EDIT_TOGGLE_ARCHIVE_F: 'ri_edit_toggle_archive_f',
 	RI_EDIT_DELETE: 'ri_edit_delete',
 	RI_EDIT_DELETE_F: 'ri_edit_delete_f',
+	RI_EDIT_DELETE_TEAM: 'ri_edit_delete_team',
+	RI_EDIT_DELETE_TEAM_F: 'ri_edit_delete_team_f',
 
 	// JITSI MEET VIEW
 	JM_CONFERENCE_JOIN: 'jm_conference_join',
@@ -318,5 +344,9 @@ export default {
 	TC_SEARCH: 'tc_search',
 	TC_CANCEL_SEARCH: 'tc_cancel_search',
 	TC_GO_ACTIONS: 'tc_go_actions',
-	TC_GO_ROOM: 'tc_go_room'
+	TC_GO_ROOM: 'tc_go_room',
+	TC_DELETE_ROOM: 'tc_delete_room',
+	TC_DELETE_ROOM_F: 'tc_delete_room_f',
+	TC_TOGGLE_AUTOJOIN: 'tc_toggle_autojoin',
+	TC_TOGGLE_AUTOJOIN_F: 'tc_toggle_autojoin_f'
 };

@@ -2,35 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { withTheme } from '../../../theme';
-import I18n from '../../../i18n';
 import * as List from '../../../containers/List';
 import { E2E_BANNER_TYPE } from '../../../lib/encryption/constants';
 import { themes } from '../../../constants/colors';
-
 import OmnichannelStatus from '../../../ee/omnichannel/containers/OmnichannelStatus';
 
-const ListHeader = React.memo(({
-	searching,
-	sortBy,
-	toggleSort,
-	goEncryption,
-	goQueue,
-	queueSize,
-	inquiryEnabled,
-	encryptionBanner,
-	user,
-	theme
-}) => {
-	const sortTitle = I18n.t('Sorting_by', { key: I18n.t(sortBy === 'alphabetical' ? 'name' : 'activity') });
+const ListHeader = React.memo(
+	({ searching, goEncryption, goQueue, queueSize, inquiryEnabled, encryptionBanner, user, theme }) => {
+		if (searching) {
+			return null;
+		}
 
-	if (searching) {
-		return null;
-	}
-
-	return (
-		<>
-			{encryptionBanner
-				? (
+		return (
+			<>
+				{encryptionBanner ? (
 					<>
 						<List.Item
 							title={
@@ -47,31 +32,22 @@ const ListHeader = React.memo(({
 						/>
 						<List.Separator />
 					</>
-				)
-				: null}
-			<List.Item
-				title={sortTitle}
-				left={() => <List.Icon name='sort' />}
-				color={themes[theme].auxiliaryText}
-				onPress={toggleSort}
-				translateTitle={false}
-			/>
-			<List.Separator />
-			<OmnichannelStatus
-				searching={searching}
-				goQueue={goQueue}
-				inquiryEnabled={inquiryEnabled}
-				queueSize={queueSize}
-				user={user}
-			/>
-		</>
-	);
-});
+				) : null}
+				<List.Separator />
+				<OmnichannelStatus
+					searching={searching}
+					goQueue={goQueue}
+					inquiryEnabled={inquiryEnabled}
+					queueSize={queueSize}
+					user={user}
+				/>
+			</>
+		);
+	}
+);
 
 ListHeader.propTypes = {
 	searching: PropTypes.bool,
-	sortBy: PropTypes.string,
-	toggleSort: PropTypes.func,
 	goEncryption: PropTypes.func,
 	goQueue: PropTypes.func,
 	queueSize: PropTypes.number,

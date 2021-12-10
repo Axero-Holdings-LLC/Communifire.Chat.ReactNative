@@ -22,7 +22,9 @@ export default class User extends Model {
 
 	@field('avatar_etag') avatarETag;
 
-	@field('login_email_password') loginEmailPassword;
-
 	@field('show_message_in_main_thread') showMessageInMainThread;
+
+	@field('is_from_webview') isFromWebView;
+
+	@field('enable_message_parser_early_adoption') enableMessageParserEarlyAdoption;
 }

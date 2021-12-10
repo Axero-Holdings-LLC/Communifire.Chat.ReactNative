@@ -4,8 +4,11 @@
 <dict>
 	<key>AppGroup</key>
 	<string>group.com.axero.rocketchat</string>
-	<key>BugsnagAPIKey</key>
-	<string></string>
+	<key>bugsnag</key>
+	<dict>
+		<key>apiKey</key>
+		<string>apiKeyValue</string>
+	</dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -100,6 +103,7 @@
 	</dict>
 	<key>UIBackgroundModes</key>
 	<array>
+		<string>audio</string>
 		<string>fetch</string>
 		<string>voip</string>
 	</array>

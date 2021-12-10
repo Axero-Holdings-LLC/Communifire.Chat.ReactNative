@@ -1,6 +1,5 @@
 import * as types from './actionsTypes';
 
-
 export function roomsRequest(params = { allData: false }) {
 	return {
 		type: types.ROOMS.REQUEST,
@@ -43,18 +42,6 @@ export function closeServerDropdown() {
 export function toggleServerDropdown() {
 	return {
 		type: types.ROOMS.TOGGLE_SERVER_DROPDOWN
-	};
-}
-
-export function closeSortDropdown() {
-	return {
-		type: types.ROOMS.CLOSE_SORT_DROPDOWN
-	};
-}
-
-export function toggleSortDropdown() {
-	return {
-		type: types.ROOMS.TOGGLE_SORT_DROPDOWN
 	};
 }
 

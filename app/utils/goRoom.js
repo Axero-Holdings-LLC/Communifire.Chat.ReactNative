@@ -14,14 +14,13 @@ const navigate = ({ item, isMasterDetail, ...props }) => {
 		t: item.t,
 		prid: item.prid,
 		room: item,
-		search: item.search,
 		visitor: item.visitor,
 		roomUserId: RocketChat.getUidDirectMessage(item),
 		...props
 	});
 };
 
-export const goRoom = async({ item = {}, isMasterDetail = false, ...props }) => {
+export const goRoom = async ({ item = {}, isMasterDetail = false, ...props }) => {
 	if (item.t === 'd' && item.search) {
 		// if user is using the search we need first to join/create room
 		try {

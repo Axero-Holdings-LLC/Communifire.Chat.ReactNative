@@ -23,16 +23,29 @@ stories.add('title and subtitle', () => (
 	</List.Container>
 ));
 
+stories.add('alert', () => (
+	<List.Container>
+		<List.Separator />
+		<List.Item title='Chats' alert />
+		<List.Separator />
+		<List.Item title={longText} translateTitle={false} translateSubtitle={false} alert />
+		<List.Separator />
+		<List.Item title='Chats' right={() => <List.Icon name='emoji' />} alert />
+		<List.Separator />
+		<List.Item title={longText} translateTitle={false} translateSubtitle={false} right={() => <List.Icon name='emoji' />} alert />
+		<List.Separator />
+	</List.Container>
+));
+
 stories.add('pressable', () => (
 	<List.Container>
 		<List.Separator />
 		<List.Item title='Press me' onPress={() => alert('Hi there!')} translateTitle={false} />
 		<List.Separator />
-		<List.Item title={'I\'m disabled'} onPress={() => alert('Hi there!')} disabled translateTitle={false} />
+		<List.Item title={"I'm disabled"} onPress={() => alert('Hi there!')} disabled translateTitle={false} />
 		<List.Separator />
 	</List.Container>
 ));
-
 
 stories.add('header', () => (
 	<List.Container>
@@ -163,9 +176,7 @@ const ListFull = () => (
 );
 
 const ThemeStory = ({ theme }) => (
-	<ThemeContext.Provider
-		value={{ theme }}
-	>
+	<ThemeContext.Provider value={{ theme }}>
 		<ListFull />
 	</ThemeContext.Provider>
 );
@@ -175,9 +186,7 @@ stories.add('with dark theme', () => <ThemeStory theme='dark' />);
 stories.add('with black theme', () => <ThemeStory theme='black' />);
 
 const FontStory = ({ fontScale }) => (
-	<DimensionsContext.Provider
-		value={{ fontScale }}
-	>
+	<DimensionsContext.Provider value={{ fontScale }}>
 		<ListFull />
 	</DimensionsContext.Provider>
 );

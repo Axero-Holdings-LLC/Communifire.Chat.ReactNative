@@ -1,6 +1,4 @@
-import {
-	lt, lte, gt, gte, coerce
-} from 'semver';
+import { coerce, gt, gte, lt, lte } from 'semver';
 
 export const formatAttachmentUrl = (attachmentUrl, userId, token, server) => {
 	attachmentUrl = decodeURI(attachmentUrl);
@@ -23,4 +21,7 @@ export const methods = {
 	greaterThanOrEqualTo: gte
 };
 
-export const compareServerVersion = (currentServerVersion, versionToCompare, func) => currentServerVersion && func(coerce(currentServerVersion), versionToCompare);
+export const compareServerVersion = (currentServerVersion, versionToCompare, func) =>
+	currentServerVersion && func(coerce(currentServerVersion), versionToCompare);
+
+export const generateLoadMoreId = id => `load-more-${id}`;
