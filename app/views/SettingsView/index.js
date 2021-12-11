@@ -5,7 +5,7 @@ import {
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import FastImage from '@rocket.chat/react-native-fast-image';
-import CookieManager from '@react-native-community/cookies';
+// import CookieManager from '@react-native-community/cookies';
 
 import { logout as logoutAction } from '../../actions/login';
 import { selectServerRequest as selectServerRequestAction } from '../../actions/server';
@@ -72,7 +72,7 @@ class SettingsView extends React.Component {
 					confirmationText: I18n.t('Clear_cookies_yes'),
 					dismissText: I18n.t('Clear_cookies_no'),
 					onPress: async() => {
-						await CookieManager.clearAll(true);
+						// await CookieManager.clearAll(true);
 						logout();
 					},
 					onCancel: () => {

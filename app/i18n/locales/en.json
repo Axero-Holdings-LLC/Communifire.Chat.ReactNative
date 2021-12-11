@@ -792,5 +792,8 @@
   "Enable_Message_Parser": "Enable Message Parser",
   "Unsupported_format": "Unsupported format",
   "Downloaded_file": "Downloaded file",
-  "Error_Download_file": "Error while downloading file"
+  "Error_Download_file": "Error while downloading file",
+  "Login_Form_Domain_Header": "Login",
+	"Login_Form_EnterDomain_Label": "Enter your Communifire chat URL",
+	"Login_Form_Domain_PlaceHolder": "chat.yourname.communifire.com"
 }
