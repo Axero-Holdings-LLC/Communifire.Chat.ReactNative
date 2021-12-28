@@ -16,7 +16,7 @@ import { selectServerRequest, serverRequest, serverFinishAdd as serverFinishAddA
 import { inviteLinksClear as inviteLinksClearAction } from '../../actions/inviteLinks';
 import sharedStyles from '../Styles';
 import Button from '../../containers/Button';
-import OrSeparator from '../../containers/OrSeparator';
+// import OrSeparator from '../../containers/OrSeparator';
 import FormContainer, { FormContainerInner } from '../../containers/FormContainer';
 import I18n from '../../i18n';
 import { themes } from '../../constants/colors';
@@ -44,10 +44,12 @@ const styles = StyleSheet.create({
 		letterSpacing: 0,
 		alignSelf: 'center'
 	},
+	/*
 	subtitle: {
 		...sharedStyles.textRegular,
 		alignSelf: 'center'
 	},
+	*/
 	certificatePicker: {
 		alignItems: 'center',
 		justifyContent: 'flex-end'
@@ -58,10 +60,12 @@ const styles = StyleSheet.create({
 	chooseCertificate: {
 		...sharedStyles.textSemibold
 	},
+	/*
 	description: {
 		...sharedStyles.textRegular,
 		textAlign: 'center'
 	},
+	*/
 	connectButton: {
 		marginBottom: 0
 	}
@@ -353,11 +357,12 @@ class NewServerView extends React.Component<INewServerView, IState> {
 							{
 								color: themes[theme].titleText,
 								fontSize: moderateScale({ size: 22, width }),
-								marginBottom: verticalScale({ size: 8, height })
+								marginBottom: verticalScale({ size: 28, height })
 							}
 						]}>
-						Rocket.Chat
+						Communifire Chat
 					</Text>
+					{/*
 					<Text
 						style={[
 							styles.subtitle,
@@ -369,6 +374,7 @@ class NewServerView extends React.Component<INewServerView, IState> {
 						]}>
 						{I18n.t('Onboarding_subtitle')}
 					</Text>
+					*/}
 					<ServerInput
 						text={text}
 						theme={theme}
@@ -388,6 +394,7 @@ class NewServerView extends React.Component<INewServerView, IState> {
 						theme={theme}
 						testID='new-server-view-button'
 					/>
+					{/*
 					<OrSeparator theme={theme} />
 					<Text
 						style={[
@@ -410,8 +417,9 @@ class NewServerView extends React.Component<INewServerView, IState> {
 						theme={theme}
 						testID='new-server-view-open'
 					/>
+					*/}
 				</FormContainerInner>
-				{this.renderCertificatePicker()}
+				{/* this.renderCertificatePicker() */}
 			</FormContainer>
 		);
 	}

@@ -29,12 +29,48 @@ const MessageInner = React.memo((props: IMessageInner) => {
 			</>
 		);
 	}
-	if (props.type === 'jitsi_call_started') {
+	if (props.type === 'jitsi_comm_call_ring') {
+		return (
+			<>
+				<User {...props} />
+				<Content {...props} isInfo />
+				{/* <PersonalCallButtons {...props} /> */}
+			</>
+		);
+	}
+	if (props.type === 'jitsi_comm_call_started') {
 		return (
 			<>
 				<User {...props} />
 				<Content {...props} isInfo />
 				<CallButton {...props} />
+			</>
+		);
+	}
+	if (props.type === 'jitsi_comm_call_started') {
+		return (
+			<>
+				<User {...props} />
+				<Content {...props} isInfo />
+				<CallButton {...props} />
+			</>
+		);
+	}
+
+	if (props.type === 'jitsi_comm_call_ended') {
+		return (
+			<>
+				<User {...props} />
+				<Content {...props} isInfo />
+			</>
+		);
+	}
+
+	if (props.type === 'jitsi_comm_call_canceled') {
+		return (
+			<>
+				<User {...props} />
+				<Content {...props} isInfo />
 			</>
 		);
 	}

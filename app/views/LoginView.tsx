@@ -71,7 +71,7 @@ class LoginView extends React.Component<IProps, any> {
 	private passwordInput: any;
 
 	static navigationOptions = ({ route, navigation }: Partial<IProps>) => ({
-		title: route?.params?.title ?? 'Rocket.Chat',
+		title: route?.params?.title ?? 'Communifire',
 		headerRight: () => <HeaderButton.Legal testID='login-view-more' navigation={navigation} />
 	});
 
@@ -232,10 +232,12 @@ class LoginView extends React.Component<IProps, any> {
 	render() {
 		const { Accounts_ShowFormLogin, theme, navigation } = this.props;
 		return (
+			// OAuth button should be clicked to take the user to OAuth page
+			// No need to show the form
 			<FormContainer theme={theme} testID='login-view'>
 				<FormContainerInner>
 					<LoginServices separator={Accounts_ShowFormLogin} navigation={navigation} />
-					{this.renderUserForm()}
+					{/* this.renderUserForm() */}
 				</FormContainerInner>
 			</FormContainer>
 		);

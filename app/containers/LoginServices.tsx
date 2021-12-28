@@ -247,7 +247,7 @@ class LoginServices extends React.PureComponent<ILoginServicesProps, any> {
 		if (loginStyle === LOGIN_STYPE_REDIRECT) {
 			obj = {
 				...obj,
-				redirectUrl: 'rocketchat://auth'
+				redirectUrl: 'wefire://auth'
 			};
 		}
 		return Base64.encodeURI(JSON.stringify(obj));

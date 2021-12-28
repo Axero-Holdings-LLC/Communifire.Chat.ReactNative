@@ -7,8 +7,10 @@ import BackgroundTimer from 'react-native-background-timer';
 import { connect } from 'react-redux';
 
 import RocketChat from '../lib/rocketchat';
+import Navigation from '../lib/Navigation';
 import { getUserSelector } from '../selectors/login';
 import ActivityIndicator from '../containers/ActivityIndicator';
+import EventEmitter from '../utils/events';
 import { events, logEvent } from '../utils/log';
 import { isAndroid, isIOS } from '../utils/deviceInfo';
 import { withTheme } from '../theme';
@@ -41,12 +43,24 @@ class JitsiMeetView extends React.Component<IJitsiMeetViewProps, IJitsiMeetViewS
 	private rid: string;
 	private url: string;
 	private jitsiTimeout: number | null;
+	private isHost: boolean;
 
 	constructor(props: IJitsiMeetViewProps) {
 		super(props);
 		this.rid = props.route.params?.rid;
+		this.onConferenceTerminated = this.onConferenceTerminated.bind(this);
+		this.onConferenceJoined = this.onConferenceJoined.bind(this);
 		this.url = props.route.params?.url;
 		this.jitsiTimeout = null;
+		this.isHost = null;
+
+		this.onCallCancelledListener = EventEmitter.addEventListener('cf_jitsi_cancel_call', () => {
+			if (this.jitsiTimeout) {
+				BackgroundTimer.clearInterval(this.jitsiTimeout);
+			}
+			JitsiMeet.endCall();
+			Navigation.back();
+		});
 
 		const { user, baseUrl } = props;
 		const { name: displayName, id: userId, token, username } = user;
@@ -85,6 +99,7 @@ class JitsiMeetView extends React.Component<IJitsiMeetViewProps, IJitsiMeetViewS
 			BackgroundTimer.stopBackgroundTimer();
 		}
 		JitsiMeet.endCall();
+		EventEmitter.removeListener('cf_jitsi_cancel_call', this.onCallCancelledListener);
 	}
 
 	onConferenceWillJoin = () => {
@@ -96,6 +111,9 @@ class JitsiMeetView extends React.Component<IJitsiMeetViewProps, IJitsiMeetViewS
 	onConferenceJoined = () => {
 		logEvent(events.JM_CONFERENCE_JOIN);
 		if (this.rid) {
+			RocketChat.cfJitsiStartCall(this.rid)
+				.then(res => (this.isHost = res.isHost))
+				.catch(e => console.log(e));
 			RocketChat.updateJitsiTimeout(this.rid).catch((e: unknown) => console.log(e));
 			if (this.jitsiTimeout) {
 				BackgroundTimer.clearInterval(this.jitsiTimeout);
@@ -110,6 +128,12 @@ class JitsiMeetView extends React.Component<IJitsiMeetViewProps, IJitsiMeetViewS
 
 	onConferenceTerminated = () => {
 		logEvent(events.JM_CONFERENCE_TERMINATE);
+		// <<<
+		// TODO: isHost?
+		RocketChat.cfJitsiCloseCall(this.rid, this.isHost).catch(e => console.log(e));
+		if (this.jitsiTimeout) {
+			BackgroundTimer.clearInterval(this.jitsiTimeout);
+		}
 		const { navigation } = this.props;
 		navigation.pop();
 	};

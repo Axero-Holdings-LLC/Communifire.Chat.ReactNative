@@ -89,6 +89,18 @@ export const getInfoMessage = ({ type, role, msg, author }: TInfoMessage) => {
 	if (type === 'jitsi_call_started') {
 		return I18n.t('Started_call', { userBy: username });
 	}
+	if (type === 'jitsi_comm_call_ring') {
+		return I18n.t('CF_is_calling', { userBy: username });
+	}
+	if (type === 'jitsi_comm_call_started') {
+		return I18n.t('CF_started_call', { userBy: username });
+	}
+	if (type === 'jitsi_comm_call_ended') {
+		return I18n.t('CF_ended_call', { userBy: username });
+	}
+	if (type === 'jitsi_comm_call_canceled') {
+		return I18n.t('CF_missed_call', { userBy: username });
+	}
 	if (type === 'ul') {
 		return I18n.t('Has_left_the_channel');
 	}

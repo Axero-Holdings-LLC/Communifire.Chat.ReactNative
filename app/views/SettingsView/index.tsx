@@ -23,7 +23,7 @@ import SidebarView from '../SidebarView';
 import { LISTENER } from '../../containers/Toast';
 import EventEmitter from '../../utils/events';
 import { ROOT_LOADING, appStart as appStartAction } from '../../actions/app';
-import { onReviewPress } from '../../utils/review';
+// import { onReviewPress } from '../../utils/review';
 import SafeAreaView from '../../containers/SafeAreaView';
 import database from '../../lib/database';
 import { isFDroidBuild } from '../../constants/environment';
@@ -207,8 +207,10 @@ class SettingsView extends React.Component<IProps, any> {
 
 					<List.Section>
 						<List.Separator />
+						{/*
 						<List.Item title='Contact_us' onPress={this.sendEmail} showActionIndicator testID='settings-view-contact' />
 						<List.Separator />
+						*/}
 						<List.Item
 							title='Language'
 							onPress={() => this.navigateToScreen('LanguageView')}
@@ -216,6 +218,7 @@ class SettingsView extends React.Component<IProps, any> {
 							testID='settings-view-language'
 						/>
 						<List.Separator />
+						{/*
 						{!isFDroidBuild ? (
 							<>
 								<List.Item
@@ -229,6 +232,7 @@ class SettingsView extends React.Component<IProps, any> {
 						<List.Separator />
 						<List.Item title='Share_this_app' showActionIndicator onPress={this.shareApp} testID='settings-view-share-app' />
 						<List.Separator />
+						*/}
 						<List.Item
 							title='Default_browser'
 							showActionIndicator
@@ -254,8 +258,10 @@ class SettingsView extends React.Component<IProps, any> {
 
 					<List.Section>
 						<List.Separator />
+						{/*
 						<List.Item title='License' onPress={this.onPressLicense} showActionIndicator testID='settings-view-license' />
 						<List.Separator />
+						*/}
 						<List.Item
 							title={I18n.t('Version_no', { version: getReadableVersion })}
 							onPress={this.copyAppVersion}

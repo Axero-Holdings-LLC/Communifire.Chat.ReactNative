@@ -74,7 +74,7 @@ class RegisterView extends React.Component<IProps, any> {
 	private avatarUrl: any;
 
 	static navigationOptions = ({ route, navigation }: Partial<IProps>) => ({
-		title: route?.params?.title ?? 'Rocket.Chat',
+		title: route?.params?.title ?? 'Communifire',
 		headerRight: () => <HeaderButton.Legal testID='register-view-more' navigation={navigation} />
 	});
 

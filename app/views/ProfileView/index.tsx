@@ -441,17 +441,20 @@ class ProfileView extends React.Component<IProfileViewProps, IProfileViewState> 
 	};
 
 	render() {
-		const { name, username, email, newPassword, avatarUrl, customFields, avatar, saving } = this.state;
+		const { name, username, email, /* newPassword, avatarUrl, customFields, */ avatar /* , saving */ } = this.state;
 		const {
 			user,
-			theme,
-			Accounts_AllowEmailChange,
-			Accounts_AllowPasswordChange,
-			Accounts_AllowRealNameChange,
-			Accounts_AllowUserAvatarChange,
-			Accounts_AllowUsernameChange,
-			Accounts_CustomFields
+			theme
+			// Accounts_AllowEmailChange,
+			// Accounts_AllowPasswordChange,
+			// Accounts_AllowRealNameChange
+			// Accounts_AllowUserAvatarChange,
+			// Accounts_AllowUsernameChange,
+			// Accounts_CustomFields
 		} = this.props;
+		const Accounts_AllowRealNameChange = false;
+		const Accounts_AllowUsernameChange = false;
+		const Accounts_AllowEmailChange = false;
 
 		return (
 			<KeyboardView
@@ -512,6 +515,7 @@ class ProfileView extends React.Component<IProfileViewProps, IProfileViewState> 
 							testID='profile-view-email'
 							theme={theme}
 						/>
+						{/*
 						<RCTextInput
 							editable={Accounts_AllowPasswordChange}
 							inputStyle={[!Accounts_AllowPasswordChange && styles.disabled]}
@@ -533,7 +537,9 @@ class ProfileView extends React.Component<IProfileViewProps, IProfileViewState> 
 							testID='profile-view-new-password'
 							theme={theme}
 						/>
+						*/}
 						{this.renderCustomFields()}
+						{/*
 						<RCTextInput
 							editable={Accounts_AllowUserAvatarChange}
 							inputStyle={[!Accounts_AllowUserAvatarChange && styles.disabled]}
@@ -548,7 +554,9 @@ class ProfileView extends React.Component<IProfileViewProps, IProfileViewState> 
 							testID='profile-view-avatar-url'
 							theme={theme}
 						/>
-						{this.renderAvatarButtons()}
+						*/}
+						{/* this.renderAvatarButtons() */}
+						{/*
 						<Button
 							title={I18n.t('Save_Changes')}
 							type='primary'
@@ -558,6 +566,7 @@ class ProfileView extends React.Component<IProfileViewProps, IProfileViewState> 
 							loading={saving}
 							theme={theme}
 						/>
+						*/}
 						<Button
 							title={I18n.t('Logout_from_other_logged_in_locations')}
 							type='secondary'

@@ -54,7 +54,7 @@ interface IState {
 
 const parseDeepLinking = (url: string) => {
 	if (url) {
-		url = url.replace(/rocketchat:\/\/|https:\/\/go.rocket.chat\//, '');
+		url = url.replace(/wefire:\/\/|https:\/\/go.cfire.in\//, '');
 		const regex = /^(room|auth|invite)\?/;
 		if (url.match(regex)) {
 			url = url.replace(regex, '').trim();
@@ -62,7 +62,7 @@ const parseDeepLinking = (url: string) => {
 				return parseQuery(url);
 			}
 		}
-		const call = /^(https:\/\/)?jitsi.rocket.chat\//;
+		const call = /^(https:\/\/)?meet.communifire.com\//;
 		const fullURL = url;
 
 		if (url.match(call)) {
